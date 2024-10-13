@@ -1,14 +1,30 @@
-from flask import Flask, render_template
-from requests import request
+from flask import Flask, jsonify, request
+from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
+from main import ai_api
 
-app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    if request.method == 'GET':
-        return render_template()
-    if request.method == 'POST':
-        return
 
+app = Flask(__name__, template_folder='templates')
+
+@app.route('/api', methods=['POST'])
+def handle_post():
+        data = request.json
+        message = str(data['message'])
+        ans = answer(message)
+        # Process the message here
+        response = {
+            'replies': ans
+        }
+        print(response)
+        return jsonify(response)
+
+def answer(message):
+        answer = ai_api(message)
+        return answer
+
+
+
+CORS(app)
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5555, debug=True)
+        app.run(port=5555, debug=True)
