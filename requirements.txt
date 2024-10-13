@@ -1,3 +1,0 @@
-phidata
-pypdf
-lancedb
