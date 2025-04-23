@@ -1,4 +1,3 @@
-from rich.prompt import Prompt
 from phi.assistant import Assistant
 from phi.llm.ollama import Ollama
 from phi.knowledge.pdf import PDFKnowledgeBase, PDFReader
@@ -18,7 +17,7 @@ def ai_api(answer):
         reader=PDFReader(chunk=True),
     )
 
-        # define an assistance with llama3 llm and loaded knowledge base
+    # define an assistance with llama3 llm and loaded knowledge base
     assistant = Assistant(
         llm=Ollama(model="llama3"),
         description="You are an Expert in mental health awareness. Your task is to understand the user question, and provide an answer using the provided contexts. Every answer you generate should have citations in this pattern  'Answer [position].', for example: 'Earth is round [1][2].,' if it's relevant.Your answers are correct, high-quality, and written by an domain expert. If the provided context does not contain the answer, simply state, 'The provided context does not have the answer.'",
@@ -27,8 +26,6 @@ def ai_api(answer):
     )
     assistant.knowledge_base.load(recreate=False)
 
-
-    assistant.print_response("Ask me about something from the knowledge base")
     while True:
         message = answer
         if message in ("exit", "bye"):
